@@ -3,8 +3,8 @@ Javascript image validator based on mimetypes.
 
 
 # Introduction
-Tired of not finding any library to validate images on the client side I decided to create one for my own use.
-Yeah, we all know client side validation is just one of the steps and we should never rely only on it, but hey! I helps, not only us but also users!
+Tired of not finding any library to validate images on the client side I decided to create one for my own use and anybody else who want to save some time doing it.
+Yeah, we all know client side validation is just one of the many steps and we should never rely only on it, but hey! It helps, not only us but also users!
 
 This library makes use of the magic numbers to detect different mimetypes, thefore even when the mimetype is mnodifed we can still figure out it it is what it claims to be.
 
