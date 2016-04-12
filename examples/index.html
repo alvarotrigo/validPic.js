@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>validPic.js - client image validator</title>
+    <meta name="author" content="Alvaro Trigo Lopez" />
+    <meta name="description" content="validPic.js validates image mimetypes on the client side" />
+    <meta name="keywords"  content="validPic.js, validate, image, pictures, mimetype, type, extension" />
+    <meta name="Resource-type" content="Document" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="../validPic.js"></script>
+
+
+</head>
+<body>
+
+    <div>
+        <input type="file" id="add-image" class="valid-pic" />
+    </div>
+
+    <div>
+        <input type="file" id="add-image" class="valid-pic" />
+    </div>
+
+
+    <script type="text/javascript">
+    /* Want to use javascript?
+
+        document.getElementById('add-image').addEventListener("ok", function(){
+            console.log("Valid Image - javascript custom event");
+        }, false);
+
+
+        document.getElementById('add-image').addEventListener("error", function(){
+            console.log("Invalid image - javascript custom event");
+        }, false);
+
+    */
+        
+        $('.valid-pic').on('error', function(e){
+            var data = e.originalEvent.detail;
+
+            console.log(data);
+            console.log("Invalid image - jQuery custom event");
+            
+            $(data.input).css('background', 'red');
+            $(data.input).after('<span class="error-message">Invalid image type!</div>');
+        });
+
+        $('.valid-pic').on('success', function(e){
+            var data = e.originalEvent.detail;
+
+            console.log(data);
+            console.log("Valid Image - jQuery custom event");
+
+            $(data.input).css('background', '');
+            $(data.input).parent().find('.error-message').remove();
+        });
+    </script>
+</body>
+</html>
