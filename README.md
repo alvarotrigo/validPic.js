@@ -8,6 +8,19 @@ Yeah, we all know client side validation is just one of the steps and we should 
 
 This library makes use of the magic numbers to detect different mimetypes, thefore even when the mimetype is mnodifed we can still figure out it it is what it claims to be.
 
+# Install using bower or npm
+
+**Optionally**, you can install fullPage.js with bower or npm if you prefer:
+Terminal
+
+```shell
+// With bower
+bower install validpic.js
+
+// With npm
+npm install validpic.js
+```
+
 # Usage
 
 Valid image types at the moment are: `png, `jpg`, `gif`, `bmp`.

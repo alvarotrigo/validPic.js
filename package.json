@@ -1,5 +1,5 @@
 {
-  "name": "validPic.js",
+  "name": "validpic.js",
   "version": "0.0.1",
   "description": "Javascript image validator based on mimetypes.",
   "main": "validPic.js",
@@ -17,7 +17,7 @@
     "upload",
     "file",
     "picture",
-    "validator",
+    "validator"
   ],
   "files": [
     "validPic.js",

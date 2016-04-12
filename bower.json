@@ -1,0 +1,29 @@
+{
+  "name": "validpic.js",
+  "homepage": "http://alvarotrigo.com/validPic/",
+  "authors": [
+    "Alvaro Trigo https://github.com/alvarotrigo"
+  ],
+  "description": "Javascript image validator based on mimetypes",
+  "main": [
+    "validPic.js",
+  ],
+  "keywords": [
+    "validate",
+    "validpic",
+    "image",
+    "upload",
+    "file",
+    "picture",
+    "validator"
+  ],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "examples"
+  ]
+}
