@@ -23,7 +23,7 @@ npm install validpic.js
 
 # Usage
 
-Valid image types at the moment are: `png, `jpg`, `gif`, `bmp`.
+Valid image types at the moment are: `png`, `jpg`, `gif`, `bmp`.
 
 - Include the script before the closing `</body>` tag.
 - Use the class `valid-pic` in any input you want to validate.
