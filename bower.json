@@ -6,7 +6,7 @@
   ],
   "description": "Javascript image validator based on mimetypes",
   "main": [
-    "validPic.js",
+    "validPic.js"
   ],
   "keywords": [
     "validate",
