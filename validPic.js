@@ -1,5 +1,5 @@
 /**
- * validPic.js v.0.0.1 (Alpha) - 
+ * validPic.js v.0.0.1 (Alpha) -
  * https://github.com/alvarotrigo/validPic.js
  *
  * Copyright (C) 2013 alvarotrigo.com - A project by Alvaro Trigo
@@ -49,8 +49,9 @@
 
         self.currentFile = null;
         self.currentInput = null;
+        self.base64 = null;
 
-        self.init = function(){           
+        self.init = function(){
             var inputs = document.querySelectorAll('.valid-pic');
 
             if(inputs){
@@ -58,7 +59,7 @@
                     input.onchange = function(){
                         self.currentFile = input.files[0];
                         self.currentInput = input;
-        
+
                         if(self.validExtension() && self.validMimeType()){
                             self.checkRealMimeType();
                         }
@@ -80,7 +81,7 @@
             //using a regular expression to trim everything before final dot (image.gif.php returns php)
             var extension = self.currentFile.name.replace(/^.*\./, '');
 
-            //no dot at all?  extension == filename 
+            //no dot at all?  extension == filename
             extension = (extension == self.currentFile.name) ? '' : extension.toLowerCase();
 
             return allowedFormats.indexOf(extension) > -1;
@@ -95,47 +96,59 @@
         // magic numbers: http://www.garykessler.net/library/file_sigs.html
         self.checkRealMimeType = function(){
             var reader = new FileReader();
-            var realMimeType;
+            var readerBase64 = new FileReader();
+
+            reader.readAsArrayBuffer(self.currentFile);
 
             //running asynchronously!
             reader.onloadend = function(event) {
-                var arr = (new Uint8Array(reader.result)).subarray(0, 4);
-                var header = '';
-                var event;
-
-                for(var i = 0; i < arr.length; i++) {
-                    header += arr[i].toString(16);
-                }
-
-                //magic numbers
-                switch (header) {
-                    case "89504e47":
-                        realMimeType = "image/png";
-                        break;
-                    case "47494638":
-                        realMimeType = "image/gif";
-                        break;
-                    case "ffd8ffDB":
-                    case "ffd8ffe0":
-                    case "ffd8ffe1":
-                    case "ffd8ffe2":
-                    case "ffd8ffe3":
-                    case "ffd8ffe8":
-                        realMimeType = "image/jpeg";
-                        break;
-                    default:
-                        realMimeType = "unknown"; // Or you can use the blob.type as fallback
-                        break;
-                }
+                var realMimeType = self.getRealMimeType(reader.result);
 
                 if(realMimeType !== 'unknown'){
-                    self.triggerValid();
+                    readerBase64.readAsDataURL(self.currentFile);
                 }else{
                     self.triggerError();
                 }
             };
 
-            reader.readAsArrayBuffer(self.currentFile);
+            readerBase64.onloadend = function(){
+                self.base64 = this.result;
+                self.triggerValid();
+            };
+
+        };
+
+        self.getRealMimeType = function(result){
+            var arr = (new Uint8Array(result)).subarray(0, 4);
+            var header = '';
+            var event;
+            var realMimeType;
+
+            for(var i = 0; i < arr.length; i++) {
+                header += arr[i].toString(16);
+            }
+
+            //magic numbers
+            switch (header) {
+                case "89504e47":
+                    realMimeType = "image/png";
+                    break;
+                case "47494638":
+                    realMimeType = "image/gif";
+                    break;
+                case "ffd8ffDB":
+                case "ffd8ffe0":
+                case "ffd8ffe1":
+                case "ffd8ffe2":
+                case "ffd8ffe3":
+                case "ffd8ffe8":
+                    realMimeType = "image/jpeg";
+                    break;
+                default:
+                    realMimeType = "unknown"; // Or you can use the blob.type as fallback
+                    break;
+            }
+            return realMimeType;
         };
 
         //error custom event
@@ -160,7 +173,8 @@
             event = new CustomEvent('success', {
                 detail: {
                     file: self.currentFile,
-                    input: self.currentInput
+                    input: self.currentInput,
+                    base64: self.base64
                 },
                 bubbles: true,
                 cancelable: true
@@ -169,11 +183,11 @@
             self.currentInput.dispatchEvent(event);
         };
 
-        return self;   
+        return self;
     }
 
     //document ready?
     document.addEventListener('DOMContentLoaded',function(){
         new validPic().init();
-     }, false);       
+     }, false);
 }));
