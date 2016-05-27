@@ -105,6 +105,13 @@
                 var realMimeType = self.getRealMimeType(reader.result);
 
                 if(realMimeType !== 'unknown'){
+                    var arrayBufferView = new Uint8Array( this.result );
+                    var blob = new Blob( [ arrayBufferView ], { type: realMimeType } );
+                    var urlCreator = window.URL || window.webkitURL || {}.createObjectURL;
+                    var imageUrl = urlCreator.createObjectURL( blob );
+
+                    self.base64 = imageUrl;
+
                     readerBase64.readAsDataURL(self.currentFile);
                 }else{
                     self.triggerError();
@@ -112,7 +119,7 @@
             };
 
             readerBase64.onloadend = function(){
-                self.base64 = this.result;
+                //self.base64 = this.result;
                 self.triggerValid();
             };
 
