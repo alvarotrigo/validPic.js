@@ -136,14 +136,14 @@
             }
 
             //magic numbers
-            switch (header) {
+            switch (header.toLowerCase()) {
                 case "89504e47":
                     realMimeType = "image/png";
                     break;
                 case "47494638":
                     realMimeType = "image/gif";
                     break;
-                case "ffd8ffDB":
+                case "ffd8ffdb":
                 case "ffd8ffe0":
                 case "ffd8ffe1":
                 case "ffd8ffe2":
